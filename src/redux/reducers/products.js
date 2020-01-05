@@ -5,6 +5,6 @@ const initialState = {
   userProducts: PRODUCTS.filter(({ ownerId }) => ownerId === 'u1')
 }
 
-export default (state = initialState, action) {
+export default (state = initialState, action) => {
   return state;
 }

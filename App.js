@@ -4,14 +4,14 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { createStore, combineReducers } from 'redux'
+import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 
-import * as reducers from './src/redux/reducers'
+import rootReducer from './src/redux/reducers/index'
 
-const rootReducer = combineReducers(reducers)
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, composeWithDevTools())
 
 import AppNavigator from './src/widgets/navigation/AppNavigator';
 
@@ -50,7 +50,10 @@ async function loadResourcesAsync() {
       // We include SpaceMono because we use it in HomeScreen.js. Feel free to
       // remove this if you are not using it in your app
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-      'Anodina-Light': require('./assets/fonts/Anodina/Anodina-Light.otf')
+      'Anodina-Light': require('./assets/fonts/Anodina/Anodina-Light.otf'),
+      'Anodina-Regualr': require('./assets/fonts/Anodina/Anodina-Regular.otf'),
+      'Anodina-Bold': require('./assets/fonts/Anodina/Anodina-Bold.otf'),
+      'Anodina-Extra': require('./assets/fonts/Anodina/Anodina-ExtraBold.otf')
     }),
   ]);
 }

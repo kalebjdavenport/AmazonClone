@@ -4,14 +4,15 @@ import * as Font from 'expo-font';
 import React, { useState } from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { composeWithDevTools } from 'redux-devtools-extension'
+// import { composeWithDevTools } from 'redux-devtools-extension'
 
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
+import ReduxThunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 
 import rootReducer from './src/redux/reducers/index'
 
-const store = createStore(rootReducer, composeWithDevTools())
+const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
 
 import AppNavigator from './src/widgets/navigation/AppNavigator';
 
@@ -51,7 +52,7 @@ async function loadResourcesAsync() {
       // remove this if you are not using it in your app
       'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
       'Anodina-Light': require('./assets/fonts/Anodina/Anodina-Light.otf'),
-      'Anodina-Regualr': require('./assets/fonts/Anodina/Anodina-Regular.otf'),
+      'Anodina-Regular': require('./assets/fonts/Anodina/Anodina-Regular.otf'),
       'Anodina-Bold': require('./assets/fonts/Anodina/Anodina-Bold.otf'),
       'Anodina-Extra': require('./assets/fonts/Anodina/Anodina-ExtraBold.otf')
     }),

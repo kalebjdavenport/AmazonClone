@@ -6,6 +6,7 @@ import { EvilIcons } from '@expo/vector-icons'
 import Colors from '../../../constants/Colors';
 
 import Home from '../Home'
+import Cart from '../cart/Cart'
 import ProductsCardList from '../../components/ProductsCardList'
 import ProductDetails from '../../components/ProductDetails'
 
@@ -21,7 +22,7 @@ const config = Platform.select({
           <TouchableOpacity style={styles.headerIconSearch}>
             <EvilIcons name='search' size={32} color={Colors.primaryColor} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.headerIconCart}>
+          <TouchableOpacity style={styles.headerIconCart} onPress={() => navigation.navigate('Cart')}>
             <EvilIcons name='cart' size={32} color={Colors.primaryColor} />
           </TouchableOpacity>
         </View>
@@ -42,6 +43,7 @@ const ShopStack = createStackNavigator(
         ),
       })
     },
+    Cart,
     Details: ProductDetails
   },
   config

@@ -1,16 +1,17 @@
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { createDrawerNavigator } from 'react-navigation-drawer';
 
 import MainTabNavigator from './MainTabNavigator';
-import OrdersView from '../orders/OrdersView'
+import OrdersStack from './OrdersNavigator'
+import UserProductsStack from './UserProductsNavigator'
+
 
 export default createDrawerNavigator({
-  Home: {
-    screen: MainTabNavigator,
+  Home: MainTabNavigator,
+  Orders: OrdersStack,
+  UserProducts: {
+    screen: UserProductsStack,
     navigationOptions: {
-      drawerLabel: "Home"
-    },
-  },
-  Orders: OrdersView
+      drawerLabel: 'My Products',
+    }
+  }
 });

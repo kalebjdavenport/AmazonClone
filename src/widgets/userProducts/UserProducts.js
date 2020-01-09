@@ -34,12 +34,12 @@ const UserProducts = ({ navigation }) => {
   }
 
   return (
-    <View>
+    <View style={styles.screen}>
       <FlatList
         data={userProducts}
         contentContainerStyle={{ paddingBottom: 40 }}
         keyExtractor={item => item.id}
-        style={styles.screen}
+        style={styles.listContainer}
         renderItem={({ item }) => (
           <ProductCard
             title={item.title}
@@ -63,6 +63,9 @@ const UserProducts = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   screen: {
+    flex: 1,
+  },
+  listContainer: {
     flexGrow: 1,
     backgroundColor: Colors.offWhite,
     paddingBottom: 100,

@@ -2,11 +2,14 @@ import React from 'react'
 import { View, Text, TextInput, StyleSheet } from 'react-native'
 import Colors from '../../constants/Colors'
 
-const Input = ({ value, disabled, onChange, heading }) => {
+const Input = props => {
+
+  const { value, disabled, onChange, heading } = props
+
   return (
     <View style={styles.formControl}>
       <Text style={styles.label}>{heading}</Text>
-      <TextInput editable={!disabled} style={!disabled ? styles.input : styles.disabledInput} value={value} onChangeText={onChange} />
+      <TextInput {...props} editable={!disabled} style={!disabled ? styles.input : styles.disabledInput} />
     </View>
   )
 }

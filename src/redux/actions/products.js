@@ -7,18 +7,20 @@ export const SET_PRODUCTS = 'SET_PRODUCTS'
 
 export const fetchProducts = () => {
 
-  return async dispatch => {
+  return async (dispatch, getState) => {
+    const { token, uid } = getState().auth
+
     try {
-      const res = await fetch(`https://congo-2a174.firebaseio.com/products.json`)
+      const res = await fetch(`https://congo-2a174.firebaseio.com/products.json?auth=${token}`)
 
       const resJson = await res.json()
 
       const loadedProducts = []
 
       for (const key in resJson) {
-        loadedProducts.push(new Product(key, 'u1', resJson[key].title, resJson[key].imageUrl, resJson[key].description, resJson[key].price))
+        loadedProducts.push(new Product(key, resJson[key].ownerId, resJson[key].title, resJson[key].imageUrl, resJson[key].description, resJson[key].price))
       }
-      dispatch({ type: SET_PRODUCTS, products: loadedProducts })
+      dispatch({ type: SET_PRODUCTS, products: loadedProducts, userProducts: loadedProducts.filter(({ ownerId }) => ownerId === uid) })
 
     }
     catch (error) {
@@ -29,9 +31,11 @@ export const fetchProducts = () => {
 
 export const deleteProduct = productId => {
 
-  return async dispatch => {
+  return async (dispatch, getState) => {
 
-    await fetch(`https://congo-2a174.firebaseio.com/products/${productId}.json`, {
+    const token = getState().auth.token
+
+    await fetch(`https://congo-2a174.firebaseio.com/products/${productId}.json?auth=${token}`, {
       method: 'DELETE',
     })
     dispatch({ type: DELETE_PRODUCT, id: productId })
@@ -40,8 +44,10 @@ export const deleteProduct = productId => {
 
 export const createProduct = (title, description, imageUrl, price) => {
 
-  return async dispatch => {
-    const res = await fetch(`https://congo-2a174.firebaseio.com/products.json`, {
+  return async (dispatch, getState) => {
+    const auth = getState().auth
+    const { uid, token } = auth
+    const res = await fetch(`https://congo-2a174.firebaseio.com/products.json?auth=${token}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -51,6 +57,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price,
+        ownerId: uid,
       })
     })
 
@@ -63,6 +70,7 @@ export const createProduct = (title, description, imageUrl, price) => {
         description,
         imageUrl,
         price,
+        ownerId: uid
       }
     })
   }
@@ -71,9 +79,11 @@ export const createProduct = (title, description, imageUrl, price) => {
 
 export const updateProduct = (id, title, description, imageUrl) => {
 
-  return async dispatch => {
+  return async (dispatch, getState) => {
 
-    await fetch(`https://congo-2a174.firebaseio.com/products/${id}.json`, {
+    const token = getState().auth.token
+
+    await fetch(`https://congo-2a174.firebaseio.com/products/${id}.json?auth=${token}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

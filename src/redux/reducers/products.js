@@ -4,7 +4,7 @@ import Product from '../../../models/product';
 
 const initialState = {
   availableProducts: PRODUCTS,
-  userProducts: PRODUCTS.filter(({ ownerId }) => ownerId === 'u1')
+  userProducts: []
 }
 
 export default (state = initialState, action) => {
@@ -12,7 +12,7 @@ export default (state = initialState, action) => {
     case SET_PRODUCTS:
       return {
         availableProducts: action.products,
-        userProducts: action.products.filter(({ ownerId }) => ownerId === 'u1')
+        userProducts: action.userProducts
       }
     case DELETE_PRODUCT:
       return {
@@ -21,7 +21,7 @@ export default (state = initialState, action) => {
         availableProducts: state.availableProducts.filter(product => product.id !== action.id)
       }
     case CREATE_PRODUCT:
-      const newProd = new Product(action.productData.id, 'u1', action.productData.title, action.productData.imageUrl, action.productData.description, action.productData.price)
+      const newProd = new Product(action.productData.id, action.productData.ownerId, action.productData.title, action.productData.imageUrl, action.productData.description, action.productData.price)
       return {
         availableProducts: state.availableProducts.concat(newProd),
         userProducts: state.userProducts.concat(newProd)

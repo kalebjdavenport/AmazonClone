@@ -11,6 +11,8 @@ import * as CartActions from '../redux/actions/cart'
 const ProductsCardList = ({ navigation }) => {
 
   const products = useSelector(state => state.products.availableProducts)
+  const auth = useSelector(state => state.auth.token)
+  console.log(auth)
 
   const dispatch = useDispatch()
 
